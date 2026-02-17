@@ -1,15 +1,17 @@
 "use client"
 
 import { Inbox, ShieldCheck, Activity, DollarSign } from "lucide-react"
+import { PlaidLinkButton } from "./plaid-link-button"
 
 interface SentinelSidebarProps {
   activeTab: "inbox" | "approved" | "runway"
   onTabChange: (tab: "inbox" | "approved" | "runway") => void
   inboxCount: number
   approvedCount: number
+  onConnect: () => void
 }
 
-export function SentinelSidebar({ activeTab, onTabChange, inboxCount, approvedCount }: SentinelSidebarProps) {
+export function SentinelSidebar({ activeTab, onTabChange, inboxCount, approvedCount, onConnect }: SentinelSidebarProps) {
   return (
     <aside className="w-64 border-r border-foreground/15 bg-card flex flex-col shrink-0">
       <div className="px-5 py-5 border-b border-foreground/15">
@@ -19,54 +21,52 @@ export function SentinelSidebar({ activeTab, onTabChange, inboxCount, approvedCo
         </div>
         <p className="text-xs text-muted-foreground mt-1 tracking-wide">Subscription Watchdog</p>
       </div>
+      <div className="px-3 pt-3">
+        <PlaidLinkButton onConnect={onConnect} />
+      </div>
       <nav className="flex flex-col gap-1 p-3 flex-1">
         <button
           onClick={() => onTabChange("inbox")}
-          className={`flex items-center gap-2.5 px-3 py-2.5 text-sm font-medium transition-colors text-left cursor-pointer ${
-            activeTab === "inbox"
+          className={`flex items-center gap-2.5 px-3 py-2.5 text-sm font-medium transition-colors text-left cursor-pointer ${activeTab === "inbox"
               ? "bg-foreground text-background"
               : "text-foreground hover:bg-foreground/5"
-          }`}
+            }`}
         >
           <Inbox className="h-4 w-4" />
           Transaction Inbox
           {inboxCount > 0 && (
-            <span className={`ml-auto text-xs font-mono px-1.5 py-0.5 ${
-              activeTab === "inbox"
+            <span className={`ml-auto text-xs font-mono px-1.5 py-0.5 ${activeTab === "inbox"
                 ? "bg-background text-foreground"
                 : "bg-foreground/10 text-foreground"
-            }`}>
+              }`}>
               {inboxCount}
             </span>
           )}
         </button>
         <button
           onClick={() => onTabChange("approved")}
-          className={`flex items-center gap-2.5 px-3 py-2.5 text-sm font-medium transition-colors text-left cursor-pointer ${
-            activeTab === "approved"
+          className={`flex items-center gap-2.5 px-3 py-2.5 text-sm font-medium transition-colors text-left cursor-pointer ${activeTab === "approved"
               ? "bg-foreground text-background"
               : "text-foreground hover:bg-foreground/5"
-          }`}
+            }`}
         >
           <ShieldCheck className="h-4 w-4" />
           Approved Subscriptions
           {approvedCount > 0 && (
-            <span className={`ml-auto text-xs font-mono px-1.5 py-0.5 ${
-              activeTab === "approved"
+            <span className={`ml-auto text-xs font-mono px-1.5 py-0.5 ${activeTab === "approved"
                 ? "bg-background text-foreground"
                 : "bg-foreground/10 text-foreground"
-            }`}>
+              }`}>
               {approvedCount}
             </span>
           )}
         </button>
         <button
           onClick={() => onTabChange("runway")}
-          className={`flex items-center gap-2.5 px-3 py-2.5 text-sm font-medium transition-colors text-left cursor-pointer ${
-            activeTab === "runway"
+          className={`flex items-center gap-2.5 px-3 py-2.5 text-sm font-medium transition-colors text-left cursor-pointer ${activeTab === "runway"
               ? "bg-foreground text-background"
               : "text-foreground hover:bg-foreground/5"
-          }`}
+            }`}
         >
           <DollarSign className="h-4 w-4" />
           Monthly Runway

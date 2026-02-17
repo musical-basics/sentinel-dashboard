@@ -1,0 +1,21 @@
+{
+    "output": {
+        "filePath": "repomix-output.xml",
+        "style": "xml"
+    },
+    "ignore": {
+        "useGitignore": true,
+        "useDefaultPatterns": true,
+        "customPatterns": [
+            "node_modules",
+            ".next",
+            ".git",
+            ".DS_Store",
+            "pnpm-lock.yaml",
+            "next-env.d.ts",
+            "components/ui/**",
+            "repomix-output.txt",
+            "repomix.config.json"
+        ]
+    }
+}

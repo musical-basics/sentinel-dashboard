@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useCallback } from "react"
 import { Inbox, AlertTriangle, DollarSign, ShieldCheck } from "lucide-react"
 import { SentinelSidebar } from "./sentinel-sidebar"
 import { TransactionCard } from "./transaction-card"
@@ -62,6 +62,18 @@ export function SentinelDashboard() {
     setSubscriptions((prev) => prev.filter((s) => s.id !== id))
   }
 
+  const fetchRealData = useCallback(async () => {
+    try {
+      const res = await fetch('/api/transactions');
+      if (res.ok) {
+        const realData = await res.json();
+        setTransactions(realData);
+      }
+    } catch (e) {
+      console.error("Sync failed", e);
+    }
+  }, []);
+
   const monthlyTotal = useMemo(() => {
     return subscriptions
       .filter((s) => s.frequency === "monthly")
@@ -86,6 +98,7 @@ export function SentinelDashboard() {
         onTabChange={setActiveTab}
         inboxCount={transactions.length}
         approvedCount={subscriptions.length}
+        onConnect={fetchRealData}
       />
 
       <main className="flex-1 overflow-y-auto">

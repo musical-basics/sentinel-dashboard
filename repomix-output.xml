@@ -1,0 +1,1778 @@
+This file is a merged representation of a subset of the codebase, containing files not matching ignore patterns, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of a subset of the repository's contents that is considered the most important context.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching these patterns are excluded: node_modules, .next, .git, .DS_Store, pnpm-lock.yaml, next-env.d.ts, components/ui/**, repomix-output.txt, repomix.config.json
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+app/
+  globals.css
+  layout.tsx
+  page.tsx
+components/
+  runway-view.tsx
+  sentinel-dashboard.tsx
+  sentinel-sidebar.tsx
+  subscription-row.tsx
+  theme-provider.tsx
+  transaction-card.tsx
+hooks/
+  use-mobile.ts
+  use-toast.ts
+lib/
+  mock-data.ts
+  types.ts
+  utils.ts
+styles/
+  globals.css
+.gitignore
+components.json
+next.config.mjs
+package.json
+postcss.config.mjs
+tsconfig.json
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="app/globals.css">
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.269 0 0);
+  --input: oklch(0.269 0 0);
+  --ring: oklch(0.439 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(0.269 0 0);
+  --sidebar-ring: oklch(0.439 0 0);
+}
+
+@theme inline {
+  --font-sans: 'Geist', 'Geist Fallback';
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+</file>
+
+<file path="app/layout.tsx">
+import type { Metadata } from 'next'
+import { Geist, Geist_Mono } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next'
+import './globals.css'
+
+const _geist = Geist({ subsets: ["latin"] });
+const _geistMono = Geist_Mono({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: 'Sentinel — Subscription Watchdog',
+  description: 'A clinical personal finance dashboard for tracking and approving recurring charges across all your accounts.',
+  icons: {
+    icon: [
+      {
+        url: '/icon-light-32x32.png',
+        media: '(prefers-color-scheme: light)',
+      },
+      {
+        url: '/icon-dark-32x32.png',
+        media: '(prefers-color-scheme: dark)',
+      },
+      {
+        url: '/icon.svg',
+        type: 'image/svg+xml',
+      },
+    ],
+    apple: '/apple-icon.png',
+  },
+}
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  return (
+    <html lang="en">
+      <body className="font-sans antialiased">
+        {children}
+        <Analytics />
+      </body>
+    </html>
+  )
+}
+</file>
+
+<file path="app/page.tsx">
+import { SentinelDashboard } from "@/components/sentinel-dashboard"
+
+export default function Page() {
+  return <SentinelDashboard />
+}
+</file>
+
+<file path="components/runway-view.tsx">
+"use client"
+
+import { useState } from "react"
+import { DollarSign, TrendingUp, TrendingDown, Plus, X, Repeat, PenLine, CreditCard } from "lucide-react"
+import type { Subscription, IncomeSource, ManualEstimate } from "@/lib/types"
+
+interface RunwayViewProps {
+  subscriptions: Subscription[]
+  incomeSources: IncomeSource[]
+  initialEstimates: ManualEstimate[]
+}
+
+function getOrdinal(n: number) {
+  const s = ["th", "st", "nd", "rd"]
+  const v = n % 100
+  return n + (s[(v - 20) % 10] || s[v] || s[0])
+}
+
+export function RunwayView({ subscriptions, incomeSources, initialEstimates }: RunwayViewProps) {
+  const [estimates, setEstimates] = useState<ManualEstimate[]>(initialEstimates)
+  const [newLabel, setNewLabel] = useState("")
+  const [newAmount, setNewAmount] = useState("")
+
+  // Calculate monthly burn: monthly subs at face value + yearly subs / 12
+  const monthlyItems = subscriptions.filter((s) => s.frequency === "monthly")
+  const yearlyItems = subscriptions.filter((s) => s.frequency === "yearly")
+
+  const monthlySubsTotal = monthlyItems.reduce((sum, s) => sum + s.amount, 0)
+  const yearlyAsMonthly = yearlyItems.reduce((sum, s) => sum + s.amount / 12, 0)
+  const totalMonthlyBurn = monthlySubsTotal + yearlyAsMonthly
+
+  // Calculate monthly income
+  const recurringIncomeTotal = incomeSources.reduce((sum, s) => sum + s.amount, 0)
+  const estimatesTotal = estimates.reduce((sum, e) => sum + e.amount, 0)
+  const totalMonthlyIncome = recurringIncomeTotal + estimatesTotal
+
+  // Net cashflow
+  const netCashflow = totalMonthlyIncome - totalMonthlyBurn
+
+  const handleAddEstimate = () => {
+    const amount = parseFloat(newAmount)
+    if (!newLabel.trim() || isNaN(amount) || amount <= 0) return
+    setEstimates((prev) => [
+      ...prev,
+      { id: `est-${Date.now()}`, label: newLabel.trim(), amount },
+    ])
+    setNewLabel("")
+    setNewAmount("")
+  }
+
+  const handleRemoveEstimate = (id: string) => {
+    setEstimates((prev) => prev.filter((e) => e.id !== id))
+  }
+
+  return (
+    <div className="p-8">
+      <div className="mb-6">
+        <div className="flex items-center gap-2.5">
+          <DollarSign className="h-5 w-5 text-foreground" />
+          <h2 className="text-xl font-bold text-foreground tracking-tight">
+            Monthly Runway
+          </h2>
+        </div>
+        <p className="text-sm text-muted-foreground mt-1">
+          Full picture of your monthly burn vs. income. Yearly costs are spread across 12 months.
+        </p>
+      </div>
+
+      {/* Net Cashflow Banner */}
+      <div className={`border-2 px-6 py-5 mb-6 ${
+        netCashflow >= 0
+          ? "border-emerald-600 bg-emerald-50"
+          : "border-red-500 bg-red-50"
+      }`}>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            {netCashflow >= 0 ? (
+              <TrendingUp className="h-5 w-5 text-emerald-700" />
+            ) : (
+              <TrendingDown className="h-5 w-5 text-red-700" />
+            )}
+            <span className={`text-sm font-semibold uppercase tracking-wider ${
+              netCashflow >= 0 ? "text-emerald-800" : "text-red-800"
+            }`}>
+              Net Monthly Cashflow
+            </span>
+          </div>
+          <span className={`text-3xl font-mono font-bold ${
+            netCashflow >= 0 ? "text-emerald-900" : "text-red-900"
+          }`}>
+            {netCashflow >= 0 ? "+" : "-"}${Math.abs(netCashflow).toFixed(2)}
+          </span>
+        </div>
+      </div>
+
+      {/* Two-Column Spreadsheet */}
+      <div className="grid grid-cols-2 gap-6">
+
+        {/* LEFT: Monthly Burn */}
+        <div className="border border-foreground/15">
+          <div className="bg-foreground text-background px-4 py-3 flex items-center justify-between">
+            <span className="text-xs font-bold uppercase tracking-wider">Monthly Burn</span>
+            <span className="text-xs font-mono">${totalMonthlyBurn.toFixed(2)}</span>
+          </div>
+
+          {/* Monthly Subscriptions */}
+          <div className="border-b border-foreground/10">
+            <div className="px-4 py-2 bg-foreground/5">
+              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
+                <Repeat className="h-3 w-3" />
+                Monthly Charges
+              </span>
+            </div>
+            {monthlyItems.length === 0 ? (
+              <div className="px-4 py-3 text-sm text-muted-foreground">No monthly subscriptions.</div>
+            ) : (
+              monthlyItems.map((sub) => (
+                <div key={sub.id} className="flex items-center justify-between px-4 py-2.5 border-t border-foreground/5">
+                  <div>
+                    <span className="text-sm font-medium text-foreground">{sub.merchant}</span>
+                    <span className="text-xs text-muted-foreground ml-2">
+                      <CreditCard className="h-3 w-3 inline-block mr-0.5 -translate-y-px" />
+                      {sub.source.bank} {"\u2022\u2022"} {sub.source.lastFour}
+                    </span>
+                  </div>
+                  <span className="text-sm font-mono font-semibold text-foreground">${sub.amount.toFixed(2)}</span>
+                </div>
+              ))
+            )}
+          </div>
+
+          {/* Yearly (as Monthly) */}
+          <div>
+            <div className="px-4 py-2 bg-red-50">
+              <span className="text-xs font-semibold uppercase tracking-wider text-red-700 flex items-center gap-1.5">
+                <Repeat className="h-3 w-3" />
+                Yearly (Monthly Equivalent)
+              </span>
+            </div>
+            {yearlyItems.length === 0 ? (
+              <div className="px-4 py-3 text-sm text-muted-foreground">No yearly subscriptions.</div>
+            ) : (
+              yearlyItems.map((sub) => (
+                <div key={sub.id} className="flex items-center justify-between px-4 py-2.5 border-t border-foreground/5 bg-red-50/50">
+                  <div>
+                    <span className="text-sm font-medium text-red-800">{sub.merchant}</span>
+                    <span className="text-xs text-red-600 ml-2">
+                      ${sub.amount.toFixed(2)}/yr {"="} ${(sub.amount / 12).toFixed(2)}/mo
+                    </span>
+                  </div>
+                  <span className="text-sm font-mono font-semibold text-red-800">${(sub.amount / 12).toFixed(2)}</span>
+                </div>
+              ))
+            )}
+          </div>
+
+          {/* Burn Total */}
+          <div className="border-t-2 border-foreground flex items-center justify-between px-4 py-3 bg-foreground/5">
+            <span className="text-sm font-bold text-foreground uppercase tracking-wide">Total Monthly Burn</span>
+            <span className="text-lg font-mono font-bold text-foreground">${totalMonthlyBurn.toFixed(2)}</span>
+          </div>
+        </div>
+
+        {/* RIGHT: Monthly Income */}
+        <div className="border border-foreground/15">
+          <div className="bg-foreground text-background px-4 py-3 flex items-center justify-between">
+            <span className="text-xs font-bold uppercase tracking-wider">Monthly Income</span>
+            <span className="text-xs font-mono">${totalMonthlyIncome.toFixed(2)}</span>
+          </div>
+
+          {/* Recurring Income */}
+          <div className="border-b border-foreground/10">
+            <div className="px-4 py-2 bg-foreground/5">
+              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
+                <Repeat className="h-3 w-3" />
+                Recurring Income
+              </span>
+            </div>
+            {incomeSources.length === 0 ? (
+              <div className="px-4 py-3 text-sm text-muted-foreground">No recurring income sources.</div>
+            ) : (
+              incomeSources.map((inc) => (
+                <div key={inc.id} className="flex items-center justify-between px-4 py-2.5 border-t border-foreground/5">
+                  <div>
+                    <span className="text-sm font-medium text-foreground">{inc.merchant}</span>
+                    <span className="text-xs text-muted-foreground ml-2">
+                      <CreditCard className="h-3 w-3 inline-block mr-0.5 -translate-y-px" />
+                      {inc.source.bank} {"\u2022\u2022"} {inc.source.lastFour}
+                    </span>
+                  </div>
+                  <span className="text-sm font-mono font-semibold text-emerald-700">${inc.amount.toFixed(2)}</span>
+                </div>
+              ))
+            )}
+          </div>
+
+          {/* Manual Estimates */}
+          <div>
+            <div className="px-4 py-2 bg-foreground/5">
+              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
+                <PenLine className="h-3 w-3" />
+                Manual Estimates
+              </span>
+            </div>
+            {estimates.map((est) => (
+              <div key={est.id} className="flex items-center justify-between px-4 py-2.5 border-t border-foreground/5">
+                <span className="text-sm font-medium text-foreground">{est.label}</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-mono font-semibold text-emerald-700">${est.amount.toFixed(2)}</span>
+                  <button
+                    onClick={() => handleRemoveEstimate(est.id)}
+                    className="text-muted-foreground hover:text-red-600 transition-colors cursor-pointer"
+                    aria-label={`Remove ${est.label}`}
+                  >
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              </div>
+            ))}
+            {/* Add Row */}
+            <div className="flex items-center gap-2 px-4 py-2.5 border-t border-dashed border-foreground/10">
+              <input
+                type="text"
+                placeholder="Label"
+                value={newLabel}
+                onChange={(e) => setNewLabel(e.target.value)}
+                className="flex-1 text-sm bg-transparent border-b border-foreground/15 py-1 px-1 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-foreground"
+              />
+              <div className="flex items-center">
+                <span className="text-sm text-muted-foreground">$</span>
+                <input
+                  type="number"
+                  placeholder="0.00"
+                  value={newAmount}
+                  onChange={(e) => setNewAmount(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleAddEstimate()}
+                  className="w-20 text-sm font-mono bg-transparent border-b border-foreground/15 py-1 px-1 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-foreground text-right"
+                />
+              </div>
+              <button
+                onClick={handleAddEstimate}
+                className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+                aria-label="Add estimate"
+              >
+                <Plus className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+
+          {/* Income Total */}
+          <div className="border-t-2 border-foreground flex items-center justify-between px-4 py-3 bg-foreground/5">
+            <span className="text-sm font-bold text-foreground uppercase tracking-wide">Total Monthly Income</span>
+            <span className="text-lg font-mono font-bold text-emerald-700">${totalMonthlyIncome.toFixed(2)}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+</file>
+
+<file path="components/sentinel-dashboard.tsx">
+"use client"
+
+import { useState, useMemo } from "react"
+import { Inbox, AlertTriangle, DollarSign, ShieldCheck } from "lucide-react"
+import { SentinelSidebar } from "./sentinel-sidebar"
+import { TransactionCard } from "./transaction-card"
+import { SubscriptionRow } from "./subscription-row"
+import { RunwayView } from "./runway-view"
+import { mockTransactions, mockSubscriptions, mockIncomeSources, mockManualEstimates } from "@/lib/mock-data"
+import type { Transaction, Subscription } from "@/lib/types"
+
+export function SentinelDashboard() {
+  const [activeTab, setActiveTab] = useState<"inbox" | "approved" | "runway">("inbox")
+  const [transactions, setTransactions] = useState<Transaction[]>(mockTransactions)
+  const [subscriptions, setSubscriptions] = useState<Subscription[]>(mockSubscriptions)
+
+  const handleApprove = (id: string) => {
+    const txn = transactions.find((t) => t.id === id)
+    if (!txn) return
+
+    const billingDay = new Date(txn.date).getDate()
+    const isYearly = txn.amount >= 100
+
+    const newSub: Subscription = {
+      id: `sub-${Date.now()}`,
+      merchant: txn.merchant,
+      amount: txn.amount,
+      source: txn.source,
+      frequency: isYearly ? "yearly" : "monthly",
+      billingDay,
+      notes: "",
+      approvedAt: new Date().toISOString().split("T")[0],
+    }
+
+    setTransactions((prev) => prev.filter((t) => t.id !== id))
+    setSubscriptions((prev) => [...prev, newSub])
+  }
+
+  const handleNotesChange = (id: string, notes: string) => {
+    setSubscriptions((prev) =>
+      prev.map((s) => (s.id === id ? { ...s, notes } : s))
+    )
+  }
+
+  const handleUnapprove = (id: string) => {
+    const sub = subscriptions.find((s) => s.id === id)
+    if (!sub) return
+
+    const newTxn: Transaction = {
+      id: `txn-${Date.now()}`,
+      merchant: sub.merchant,
+      amount: sub.amount,
+      source: sub.source,
+      date: sub.approvedAt,
+    }
+
+    setSubscriptions((prev) => prev.filter((s) => s.id !== id))
+    setTransactions((prev) => [...prev, newTxn])
+  }
+
+  const handleRemove = (id: string) => {
+    setSubscriptions((prev) => prev.filter((s) => s.id !== id))
+  }
+
+  const monthlyTotal = useMemo(() => {
+    return subscriptions
+      .filter((s) => s.frequency === "monthly")
+      .reduce((sum, s) => sum + s.amount, 0)
+  }, [subscriptions])
+
+  const yearlyTotal = useMemo(() => {
+    return subscriptions
+      .filter((s) => s.frequency === "yearly")
+      .reduce((sum, s) => sum + s.amount, 0)
+  }, [subscriptions])
+
+  const yearlyCount = useMemo(
+    () => subscriptions.filter((s) => s.frequency === "yearly").length,
+    [subscriptions]
+  )
+
+  return (
+    <div className="flex h-screen bg-background">
+      <SentinelSidebar
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        inboxCount={transactions.length}
+        approvedCount={subscriptions.length}
+      />
+
+      <main className="flex-1 overflow-y-auto">
+        {activeTab === "inbox" && (
+          <InboxView transactions={transactions} onApprove={handleApprove} />
+        )}
+        {activeTab === "approved" && (
+          <ApprovedView
+            subscriptions={subscriptions}
+            onNotesChange={handleNotesChange}
+            onRemove={handleRemove}
+            onUnapprove={handleUnapprove}
+            monthlyTotal={monthlyTotal}
+            yearlyTotal={yearlyTotal}
+            yearlyCount={yearlyCount}
+          />
+        )}
+        {activeTab === "runway" && (
+          <RunwayView
+            subscriptions={subscriptions}
+            incomeSources={mockIncomeSources}
+            initialEstimates={mockManualEstimates}
+          />
+        )}
+      </main>
+    </div>
+  )
+}
+
+function InboxView({
+  transactions,
+  onApprove,
+}: {
+  transactions: Transaction[]
+  onApprove: (id: string) => void
+}) {
+  return (
+    <div className="p-8">
+      <div className="mb-6">
+        <div className="flex items-center gap-2.5">
+          <Inbox className="h-5 w-5 text-foreground" />
+          <h2 className="text-xl font-bold text-foreground tracking-tight">
+            Transaction Inbox
+          </h2>
+        </div>
+        <p className="text-sm text-muted-foreground mt-1">
+          {transactions.length} unreviewed charge{transactions.length !== 1 ? "s" : ""}. Review and approve recurring subscriptions.
+        </p>
+      </div>
+
+      {transactions.length === 0 ? (
+        <div className="border border-foreground/15 p-12 text-center">
+          <ShieldCheck className="h-8 w-8 mx-auto text-muted-foreground mb-3" />
+          <p className="text-foreground font-semibold">Inbox clear</p>
+          <p className="text-sm text-muted-foreground mt-1">
+            All transactions have been reviewed.
+          </p>
+        </div>
+      ) : (
+        <div className="flex flex-col gap-2">
+          {transactions.map((txn) => (
+            <TransactionCard
+              key={txn.id}
+              transaction={txn}
+              onApprove={onApprove}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function ApprovedView({
+  subscriptions,
+  onNotesChange,
+  onRemove,
+  onUnapprove,
+  monthlyTotal,
+  yearlyTotal,
+  yearlyCount,
+}: {
+  subscriptions: Subscription[]
+  onNotesChange: (id: string, notes: string) => void
+  onRemove: (id: string) => void
+  onUnapprove: (id: string) => void
+  monthlyTotal: number
+  yearlyTotal: number
+  yearlyCount: number
+}) {
+  return (
+    <div className="p-8">
+      <div className="mb-6">
+        <div className="flex items-center gap-2.5">
+          <ShieldCheck className="h-5 w-5 text-foreground" />
+          <h2 className="text-xl font-bold text-foreground tracking-tight">
+            Approved Subscriptions
+          </h2>
+        </div>
+        <p className="text-sm text-muted-foreground mt-1">
+          {subscriptions.length} active subscription{subscriptions.length !== 1 ? "s" : ""} across all accounts.
+        </p>
+      </div>
+
+      {/* Summary Cards */}
+      <div className="grid grid-cols-3 gap-4 mb-6">
+        <div className="border border-foreground/15 px-4 py-3 bg-card">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
+            <DollarSign className="h-3.5 w-3.5" />
+            Monthly Burn
+          </div>
+          <p className="text-2xl font-mono font-bold text-foreground">
+            ${monthlyTotal.toFixed(2)}
+          </p>
+        </div>
+        <div className="border border-foreground/15 px-4 py-3 bg-card">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
+            <DollarSign className="h-3.5 w-3.5" />
+            Yearly Commitments
+          </div>
+          <p className="text-2xl font-mono font-bold text-foreground">
+            ${yearlyTotal.toFixed(2)}
+          </p>
+        </div>
+        {yearlyCount > 0 && (
+          <div className="border border-red-400 bg-red-50 px-4 py-3">
+            <div className="flex items-center gap-2 text-sm text-red-800 mb-1">
+              <AlertTriangle className="h-3.5 w-3.5" />
+              Yearly Danger Zone
+            </div>
+            <p className="text-2xl font-mono font-bold text-red-900">
+              {yearlyCount} item{yearlyCount !== 1 ? "s" : ""}
+            </p>
+          </div>
+        )}
+      </div>
+
+      {subscriptions.length === 0 ? (
+        <div className="border border-foreground/15 p-12 text-center">
+          <Inbox className="h-8 w-8 mx-auto text-muted-foreground mb-3" />
+          <p className="text-foreground font-semibold">No approved subscriptions</p>
+          <p className="text-sm text-muted-foreground mt-1">
+            Approve transactions from the Inbox to see them here.
+          </p>
+        </div>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="bg-foreground text-background">
+                <th className="border border-foreground/15 px-4 py-2.5 text-left text-xs font-bold uppercase tracking-wider">
+                  Merchant
+                </th>
+                <th className="border border-foreground/15 px-4 py-2.5 text-right text-xs font-bold uppercase tracking-wider">
+                  Amount
+                </th>
+                <th className="border border-foreground/15 px-4 py-2.5 text-left text-xs font-bold uppercase tracking-wider">
+                  Frequency
+                </th>
+                <th className="border border-foreground/15 px-4 py-2.5 text-center text-xs font-bold uppercase tracking-wider">
+                  Billing Day
+                </th>
+                <th className="border border-foreground/15 px-4 py-2.5 text-left text-xs font-bold uppercase tracking-wider">
+                  Source
+                </th>
+                <th className="border border-foreground/15 px-4 py-2.5 text-left text-xs font-bold uppercase tracking-wider">
+                  Notes
+                </th>
+                <th className="border border-foreground/15 px-4 py-2.5 text-center text-xs font-bold uppercase tracking-wider w-16">
+                  <span className="sr-only">Actions</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {subscriptions.map((sub) => (
+                <SubscriptionRow
+                  key={sub.id}
+                  subscription={sub}
+                  onNotesChange={onNotesChange}
+                  onRemove={onRemove}
+                  onUnapprove={onUnapprove}
+                />
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  )
+}
+</file>
+
+<file path="components/sentinel-sidebar.tsx">
+"use client"
+
+import { Inbox, ShieldCheck, Activity, DollarSign } from "lucide-react"
+
+interface SentinelSidebarProps {
+  activeTab: "inbox" | "approved" | "runway"
+  onTabChange: (tab: "inbox" | "approved" | "runway") => void
+  inboxCount: number
+  approvedCount: number
+}
+
+export function SentinelSidebar({ activeTab, onTabChange, inboxCount, approvedCount }: SentinelSidebarProps) {
+  return (
+    <aside className="w-64 border-r border-foreground/15 bg-card flex flex-col shrink-0">
+      <div className="px-5 py-5 border-b border-foreground/15">
+        <div className="flex items-center gap-2.5">
+          <Activity className="h-5 w-5 text-foreground" strokeWidth={2.5} />
+          <h1 className="text-lg font-bold tracking-tight text-foreground">SENTINEL</h1>
+        </div>
+        <p className="text-xs text-muted-foreground mt-1 tracking-wide">Subscription Watchdog</p>
+      </div>
+      <nav className="flex flex-col gap-1 p-3 flex-1">
+        <button
+          onClick={() => onTabChange("inbox")}
+          className={`flex items-center gap-2.5 px-3 py-2.5 text-sm font-medium transition-colors text-left cursor-pointer ${
+            activeTab === "inbox"
+              ? "bg-foreground text-background"
+              : "text-foreground hover:bg-foreground/5"
+          }`}
+        >
+          <Inbox className="h-4 w-4" />
+          Transaction Inbox
+          {inboxCount > 0 && (
+            <span className={`ml-auto text-xs font-mono px-1.5 py-0.5 ${
+              activeTab === "inbox"
+                ? "bg-background text-foreground"
+                : "bg-foreground/10 text-foreground"
+            }`}>
+              {inboxCount}
+            </span>
+          )}
+        </button>
+        <button
+          onClick={() => onTabChange("approved")}
+          className={`flex items-center gap-2.5 px-3 py-2.5 text-sm font-medium transition-colors text-left cursor-pointer ${
+            activeTab === "approved"
+              ? "bg-foreground text-background"
+              : "text-foreground hover:bg-foreground/5"
+          }`}
+        >
+          <ShieldCheck className="h-4 w-4" />
+          Approved Subscriptions
+          {approvedCount > 0 && (
+            <span className={`ml-auto text-xs font-mono px-1.5 py-0.5 ${
+              activeTab === "approved"
+                ? "bg-background text-foreground"
+                : "bg-foreground/10 text-foreground"
+            }`}>
+              {approvedCount}
+            </span>
+          )}
+        </button>
+        <button
+          onClick={() => onTabChange("runway")}
+          className={`flex items-center gap-2.5 px-3 py-2.5 text-sm font-medium transition-colors text-left cursor-pointer ${
+            activeTab === "runway"
+              ? "bg-foreground text-background"
+              : "text-foreground hover:bg-foreground/5"
+          }`}
+        >
+          <DollarSign className="h-4 w-4" />
+          Monthly Runway
+        </button>
+      </nav>
+      <div className="px-5 py-4 border-t border-foreground/15">
+        <p className="text-xs text-muted-foreground">
+          All charges land in the Inbox. Nothing is "safe" until you approve it.
+        </p>
+      </div>
+    </aside>
+  )
+}
+</file>
+
+<file path="components/subscription-row.tsx">
+"use client"
+
+import { CreditCard, Trash2, Undo2 } from "lucide-react"
+import type { Subscription } from "@/lib/types"
+
+interface SubscriptionRowProps {
+  subscription: Subscription
+  onNotesChange: (id: string, notes: string) => void
+  onRemove: (id: string) => void
+  onUnapprove: (id: string) => void
+}
+
+export function SubscriptionRow({ subscription, onNotesChange, onRemove, onUnapprove }: SubscriptionRowProps) {
+  const isYearly = subscription.frequency === "yearly"
+
+  return (
+    <tr className={isYearly ? "bg-red-50" : "bg-card"}>
+      <td className="border border-foreground/15 px-4 py-3">
+        <span className={`font-semibold ${isYearly ? "text-red-900" : "text-foreground"}`}>
+          {subscription.merchant}
+        </span>
+      </td>
+      <td className={`border border-foreground/15 px-4 py-3 font-mono text-right ${isYearly ? "text-red-900" : "text-foreground"}`}>
+        ${subscription.amount.toFixed(2)}
+      </td>
+      <td className="border border-foreground/15 px-4 py-3">
+        {isYearly ? (
+          <span className="inline-block border border-red-400 bg-red-100 text-red-900 text-xs font-bold uppercase px-2 py-0.5 tracking-wide">
+            Yearly
+          </span>
+        ) : (
+          <span className="inline-block border border-emerald-400 bg-emerald-50 text-emerald-800 text-xs font-bold uppercase px-2 py-0.5 tracking-wide">
+            Monthly
+          </span>
+        )}
+      </td>
+      <td className={`border border-foreground/15 px-4 py-3 text-center ${isYearly ? "text-red-900" : "text-foreground"}`}>
+        {subscription.billingDay}{getOrdinalSuffix(subscription.billingDay)}
+      </td>
+      <td className="border border-foreground/15 px-4 py-3">
+        <span className={`flex items-center gap-1 text-sm ${isYearly ? "text-red-800" : "text-muted-foreground"}`}>
+          <CreditCard className="h-3.5 w-3.5 shrink-0" />
+          {subscription.source.bank} {"••"} {subscription.source.lastFour}
+        </span>
+      </td>
+      <td className="border border-foreground/15 px-4 py-3">
+        <input
+          type="text"
+          value={subscription.notes}
+          onChange={(e) => onNotesChange(subscription.id, e.target.value)}
+          placeholder="Add a note..."
+          className={`w-full bg-transparent border-b border-dashed text-sm focus:outline-none focus:border-foreground py-0.5 placeholder:text-muted-foreground/50 ${
+            isYearly
+              ? "border-red-300 text-red-900"
+              : "border-foreground/20 text-foreground"
+          }`}
+        />
+      </td>
+      <td className="border border-foreground/15 px-4 py-3">
+        <div className="flex items-center justify-center gap-2">
+          <button
+            onClick={() => onUnapprove(subscription.id)}
+            className="flex items-center gap-1 border border-foreground/20 bg-background text-foreground text-xs font-semibold uppercase tracking-wide px-2.5 py-1 hover:bg-foreground hover:text-background transition-colors cursor-pointer"
+            aria-label={`Unapprove ${subscription.merchant}`}
+          >
+            <Undo2 className="h-3 w-3" />
+            Unapprove
+          </button>
+          <button
+            onClick={() => onRemove(subscription.id)}
+            className="text-muted-foreground hover:text-red-600 transition-colors cursor-pointer"
+            aria-label={`Remove ${subscription.merchant}`}
+          >
+            <Trash2 className="h-4 w-4" />
+          </button>
+        </div>
+      </td>
+    </tr>
+  )
+}
+
+function getOrdinalSuffix(day: number): string {
+  if (day >= 11 && day <= 13) return "th"
+  switch (day % 10) {
+    case 1: return "st"
+    case 2: return "nd"
+    case 3: return "rd"
+    default: return "th"
+  }
+}
+</file>
+
+<file path="components/theme-provider.tsx">
+'use client'
+
+import * as React from 'react'
+import {
+  ThemeProvider as NextThemesProvider,
+  type ThemeProviderProps,
+} from 'next-themes'
+
+export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
+  return <NextThemesProvider {...props}>{children}</NextThemesProvider>
+}
+</file>
+
+<file path="components/transaction-card.tsx">
+"use client"
+
+import { CheckCircle, CreditCard, Calendar } from "lucide-react"
+import type { Transaction } from "@/lib/types"
+
+interface TransactionCardProps {
+  transaction: Transaction
+  onApprove: (id: string) => void
+}
+
+function formatDate(dateStr: string) {
+  const [year, month, day] = dateStr.split("-").map(Number)
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+  return `${months[month - 1]} ${day}, ${year}`
+}
+
+export function TransactionCard({ transaction, onApprove }: TransactionCardProps) {
+  return (
+    <div className="border border-foreground/15 bg-card p-4 flex items-center justify-between gap-4">
+      <div className="flex flex-col gap-1 min-w-0 flex-1">
+        <div className="flex items-center gap-3">
+          <span className="text-lg font-bold text-foreground truncate">
+            {transaction.merchant}
+          </span>
+          {transaction.category && (
+            <span className="text-xs text-muted-foreground border border-foreground/10 px-1.5 py-0.5 shrink-0">
+              {transaction.category}
+            </span>
+          )}
+        </div>
+        <div className="flex items-center gap-3 text-sm text-muted-foreground">
+          <span className="flex items-center gap-1">
+            <CreditCard className="h-3.5 w-3.5" />
+            {transaction.source.bank} {"••"} {transaction.source.lastFour}
+          </span>
+          <span className="flex items-center gap-1">
+            <Calendar className="h-3.5 w-3.5" />
+            {formatDate(transaction.date)}
+          </span>
+        </div>
+      </div>
+      <div className="flex items-center gap-4 shrink-0">
+        <span className="text-lg font-mono font-semibold text-foreground">
+          ${transaction.amount.toFixed(2)}
+        </span>
+        <button
+          onClick={() => onApprove(transaction.id)}
+          className="flex items-center gap-1.5 border border-foreground/15 px-3 py-1.5 text-sm font-medium text-foreground hover:bg-foreground hover:text-background transition-colors cursor-pointer"
+        >
+          <CheckCircle className="h-4 w-4" />
+          Approve
+        </button>
+      </div>
+    </div>
+  )
+}
+</file>
+
+<file path="hooks/use-mobile.ts">
+import * as React from 'react'
+
+const MOBILE_BREAKPOINT = 768
+
+export function useIsMobile() {
+  const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
+
+  React.useEffect(() => {
+    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
+    const onChange = () => {
+      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    }
+    mql.addEventListener('change', onChange)
+    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    return () => mql.removeEventListener('change', onChange)
+  }, [])
+
+  return !!isMobile
+}
+</file>
+
+<file path="hooks/use-toast.ts">
+'use client'
+
+// Inspired by react-hot-toast library
+import * as React from 'react'
+
+import type { ToastActionElement, ToastProps } from '@/components/ui/toast'
+
+const TOAST_LIMIT = 1
+const TOAST_REMOVE_DELAY = 1000000
+
+type ToasterToast = ToastProps & {
+  id: string
+  title?: React.ReactNode
+  description?: React.ReactNode
+  action?: ToastActionElement
+}
+
+const actionTypes = {
+  ADD_TOAST: 'ADD_TOAST',
+  UPDATE_TOAST: 'UPDATE_TOAST',
+  DISMISS_TOAST: 'DISMISS_TOAST',
+  REMOVE_TOAST: 'REMOVE_TOAST',
+} as const
+
+let count = 0
+
+function genId() {
+  count = (count + 1) % Number.MAX_SAFE_INTEGER
+  return count.toString()
+}
+
+type ActionType = typeof actionTypes
+
+type Action =
+  | {
+      type: ActionType['ADD_TOAST']
+      toast: ToasterToast
+    }
+  | {
+      type: ActionType['UPDATE_TOAST']
+      toast: Partial<ToasterToast>
+    }
+  | {
+      type: ActionType['DISMISS_TOAST']
+      toastId?: ToasterToast['id']
+    }
+  | {
+      type: ActionType['REMOVE_TOAST']
+      toastId?: ToasterToast['id']
+    }
+
+interface State {
+  toasts: ToasterToast[]
+}
+
+const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>()
+
+const addToRemoveQueue = (toastId: string) => {
+  if (toastTimeouts.has(toastId)) {
+    return
+  }
+
+  const timeout = setTimeout(() => {
+    toastTimeouts.delete(toastId)
+    dispatch({
+      type: 'REMOVE_TOAST',
+      toastId: toastId,
+    })
+  }, TOAST_REMOVE_DELAY)
+
+  toastTimeouts.set(toastId, timeout)
+}
+
+export const reducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case 'ADD_TOAST':
+      return {
+        ...state,
+        toasts: [action.toast, ...state.toasts].slice(0, TOAST_LIMIT),
+      }
+
+    case 'UPDATE_TOAST':
+      return {
+        ...state,
+        toasts: state.toasts.map((t) =>
+          t.id === action.toast.id ? { ...t, ...action.toast } : t,
+        ),
+      }
+
+    case 'DISMISS_TOAST': {
+      const { toastId } = action
+
+      // ! Side effects ! - This could be extracted into a dismissToast() action,
+      // but I'll keep it here for simplicity
+      if (toastId) {
+        addToRemoveQueue(toastId)
+      } else {
+        state.toasts.forEach((toast) => {
+          addToRemoveQueue(toast.id)
+        })
+      }
+
+      return {
+        ...state,
+        toasts: state.toasts.map((t) =>
+          t.id === toastId || toastId === undefined
+            ? {
+                ...t,
+                open: false,
+              }
+            : t,
+        ),
+      }
+    }
+    case 'REMOVE_TOAST':
+      if (action.toastId === undefined) {
+        return {
+          ...state,
+          toasts: [],
+        }
+      }
+      return {
+        ...state,
+        toasts: state.toasts.filter((t) => t.id !== action.toastId),
+      }
+  }
+}
+
+const listeners: Array<(state: State) => void> = []
+
+let memoryState: State = { toasts: [] }
+
+function dispatch(action: Action) {
+  memoryState = reducer(memoryState, action)
+  listeners.forEach((listener) => {
+    listener(memoryState)
+  })
+}
+
+type Toast = Omit<ToasterToast, 'id'>
+
+function toast({ ...props }: Toast) {
+  const id = genId()
+
+  const update = (props: ToasterToast) =>
+    dispatch({
+      type: 'UPDATE_TOAST',
+      toast: { ...props, id },
+    })
+  const dismiss = () => dispatch({ type: 'DISMISS_TOAST', toastId: id })
+
+  dispatch({
+    type: 'ADD_TOAST',
+    toast: {
+      ...props,
+      id,
+      open: true,
+      onOpenChange: (open) => {
+        if (!open) dismiss()
+      },
+    },
+  })
+
+  return {
+    id: id,
+    dismiss,
+    update,
+  }
+}
+
+function useToast() {
+  const [state, setState] = React.useState<State>(memoryState)
+
+  React.useEffect(() => {
+    listeners.push(setState)
+    return () => {
+      const index = listeners.indexOf(setState)
+      if (index > -1) {
+        listeners.splice(index, 1)
+      }
+    }
+  }, [state])
+
+  return {
+    ...state,
+    toast,
+    dismiss: (toastId?: string) => dispatch({ type: 'DISMISS_TOAST', toastId }),
+  }
+}
+
+export { useToast, toast }
+</file>
+
+<file path="lib/mock-data.ts">
+import type { Transaction, Subscription, IncomeSource, ManualEstimate } from "./types"
+
+export const mockTransactions: Transaction[] = [
+  {
+    id: "txn-1",
+    merchant: "Netflix",
+    amount: 15.99,
+    source: { bank: "Chase", lastFour: "1234" },
+    date: "2026-02-01",
+    category: "Entertainment",
+  },
+  {
+    id: "txn-2",
+    merchant: "Spotify",
+    amount: 10.99,
+    source: { bank: "Chase", lastFour: "1234" },
+    date: "2026-02-03",
+    category: "Entertainment",
+  },
+  {
+    id: "txn-3",
+    merchant: "iCloud+",
+    amount: 2.99,
+    source: { bank: "Amex", lastFour: "9876" },
+    date: "2026-02-05",
+    category: "Cloud Storage",
+  },
+  {
+    id: "txn-4",
+    merchant: "Adobe Creative Cloud",
+    amount: 659.88,
+    source: { bank: "Amex", lastFour: "9876" },
+    date: "2026-01-15",
+    category: "Software",
+  },
+  {
+    id: "txn-5",
+    merchant: "ChatGPT Plus",
+    amount: 20.0,
+    source: { bank: "Chase", lastFour: "1234" },
+    date: "2026-02-10",
+    category: "AI Tools",
+  },
+  {
+    id: "txn-6",
+    merchant: "Wise",
+    amount: 9.0,
+    source: { bank: "Wise", lastFour: "5522" },
+    date: "2026-02-12",
+    category: "Financial Services",
+  },
+  {
+    id: "txn-7",
+    merchant: "GitHub Pro",
+    amount: 4.0,
+    source: { bank: "Chase", lastFour: "1234" },
+    date: "2026-02-08",
+    category: "Developer Tools",
+  },
+  {
+    id: "txn-8",
+    merchant: "New York Times",
+    amount: 260.0,
+    source: { bank: "Amex", lastFour: "9876" },
+    date: "2026-01-20",
+    category: "News",
+  },
+]
+
+export const mockSubscriptions: Subscription[] = [
+  {
+    id: "sub-1",
+    merchant: "Google One",
+    amount: 2.99,
+    source: { bank: "Chase", lastFour: "1234" },
+    frequency: "monthly",
+    billingDay: 1,
+    notes: "",
+    approvedAt: "2026-01-10",
+  },
+  {
+    id: "sub-2",
+    merchant: "1Password",
+    amount: 35.88,
+    source: { bank: "Amex", lastFour: "9876" },
+    frequency: "yearly",
+    billingDay: 22,
+    notes: "Shared with family",
+    approvedAt: "2025-12-22",
+  },
+  {
+    id: "sub-3",
+    merchant: "Notion",
+    amount: 10.0,
+    source: { bank: "Wise", lastFour: "5522" },
+    frequency: "monthly",
+    billingDay: 5,
+    notes: "Work use only",
+    approvedAt: "2026-01-05",
+  },
+  {
+    id: "sub-4",
+    merchant: "Mortgage — Wells Fargo",
+    amount: 2700.0,
+    source: { bank: "Chase", lastFour: "1234" },
+    frequency: "monthly",
+    billingDay: 1,
+    notes: "30-yr fixed",
+    approvedAt: "2025-06-01",
+  },
+  {
+    id: "sub-5",
+    merchant: "Amazon Prime",
+    amount: 139.0,
+    source: { bank: "Amex", lastFour: "9876" },
+    frequency: "yearly",
+    billingDay: 15,
+    notes: "",
+    approvedAt: "2025-09-15",
+  },
+]
+
+export const mockIncomeSources: IncomeSource[] = [
+  {
+    id: "inc-1",
+    merchant: "Salary — Acme Corp",
+    amount: 6200.0,
+    source: { bank: "Chase", lastFour: "1234" },
+    frequency: "monthly",
+  },
+  {
+    id: "inc-2",
+    merchant: "Side Project Revenue",
+    amount: 480.0,
+    source: { bank: "Wise", lastFour: "5522" },
+    frequency: "monthly",
+  },
+]
+
+export const mockManualEstimates: ManualEstimate[] = [
+  {
+    id: "est-1",
+    label: "Freelance Estimate",
+    amount: 2000,
+  },
+]
+</file>
+
+<file path="lib/types.ts">
+export type BankSource = {
+  bank: string
+  lastFour: string
+}
+
+export type Frequency = "monthly" | "yearly"
+
+export type Transaction = {
+  id: string
+  merchant: string
+  amount: number
+  source: BankSource
+  date: string
+  category?: string
+}
+
+export type Subscription = {
+  id: string
+  merchant: string
+  amount: number
+  source: BankSource
+  frequency: Frequency
+  billingDay: number
+  notes: string
+  approvedAt: string
+}
+
+export type IncomeSource = {
+  id: string
+  merchant: string
+  amount: number
+  source: BankSource
+  frequency: Frequency
+}
+
+export type ManualEstimate = {
+  id: string
+  label: string
+  amount: number
+}
+</file>
+
+<file path="lib/utils.ts">
+import { clsx, type ClassValue } from 'clsx'
+import { twMerge } from 'tailwind-merge'
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+</file>
+
+<file path="styles/globals.css">
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.269 0 0);
+  --input: oklch(0.269 0 0);
+  --ring: oklch(0.439 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(0.269 0 0);
+  --sidebar-ring: oklch(0.439 0 0);
+}
+
+@theme inline {
+  --font-sans: 'Geist', 'Geist Fallback';
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+</file>
+
+<file path=".gitignore">
+# v0 runtime files (should only exist in preview, not in git)
+__v0_runtime_loader.js
+__v0_devtools.tsx
+__v0_jsx-dev-runtime.ts
+
+# Common ignores
+node_modules/
+.next/
+.env*.local
+.DS_Store
+</file>
+
+<file path="components.json">
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "app/globals.css",
+    "baseColor": "neutral",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
+  },
+  "iconLibrary": "lucide"
+}
+</file>
+
+<file path="next.config.mjs">
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  images: {
+    unoptimized: true,
+  },
+}
+
+export default nextConfig
+</file>
+
+<file path="package.json">
+{
+  "name": "my-project",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^3.9.1",
+    "@vercel/analytics": "1.6.1",
+    "@radix-ui/react-accordion": "1.2.12",
+    "@radix-ui/react-alert-dialog": "1.1.15",
+    "@radix-ui/react-aspect-ratio": "1.1.8",
+    "@radix-ui/react-avatar": "1.1.11",
+    "@radix-ui/react-checkbox": "1.3.3",
+    "@radix-ui/react-collapsible": "1.1.12",
+    "@radix-ui/react-context-menu": "2.2.16",
+    "@radix-ui/react-dialog": "1.1.15",
+    "@radix-ui/react-dropdown-menu": "2.1.16",
+    "@radix-ui/react-hover-card": "1.1.15",
+    "@radix-ui/react-label": "2.1.8",
+    "@radix-ui/react-menubar": "1.1.16",
+    "@radix-ui/react-navigation-menu": "1.2.14",
+    "@radix-ui/react-popover": "1.1.15",
+    "@radix-ui/react-progress": "1.1.8",
+    "@radix-ui/react-radio-group": "1.3.8",
+    "@radix-ui/react-scroll-area": "1.2.10",
+    "@radix-ui/react-select": "2.2.6",
+    "@radix-ui/react-separator": "1.1.8",
+    "@radix-ui/react-slider": "1.3.6",
+    "@radix-ui/react-slot": "1.2.4",
+    "@radix-ui/react-switch": "1.2.6",
+    "@radix-ui/react-tabs": "1.1.13",
+    "@radix-ui/react-toast": "1.2.15",
+    "@radix-ui/react-toggle": "1.1.10",
+    "@radix-ui/react-toggle-group": "1.1.11",
+    "@radix-ui/react-tooltip": "1.2.8",
+    "autoprefixer": "^10.4.20",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cmdk": "1.1.1",
+    "date-fns": "4.1.0",
+    "embla-carousel-react": "8.6.0",
+    "input-otp": "1.4.2",
+    "lucide-react": "^0.564.0",
+    "next": "16.1.6",
+    "next-themes": "^0.4.6",
+    "react": "19.2.4",
+    "react-day-picker": "9.13.2",
+    "react-dom": "19.2.4",
+    "react-hook-form": "^7.54.1",
+    "react-resizable-panels": "^2.1.7",
+    "recharts": "2.15.0",
+    "sonner": "^1.7.1",
+    "tailwind-merge": "^3.3.1",
+    "vaul": "^1.1.2",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.13",
+    "@types/node": "^22",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "postcss": "^8.5",
+    "tailwindcss": "^4.1.9",
+    "tw-animate-css": "1.3.3",
+    "typescript": "5.7.3"
+  }
+}
+</file>
+
+<file path="postcss.config.mjs">
+/** @type {import('postcss-load-config').Config} */
+const config = {
+  plugins: {
+    '@tailwindcss/postcss': {},
+  },
+}
+
+export default config
+</file>
+
+<file path="tsconfig.json">
+{
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "target": "ES6",
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
+</file>
+
+</files>
