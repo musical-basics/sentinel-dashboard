@@ -1,15 +1,17 @@
 "use client"
 
-import { Inbox, ShieldCheck, Activity, DollarSign } from "lucide-react"
+import { Inbox, ShieldCheck, Activity, DollarSign, RefreshCw } from "lucide-react"
 
 interface SentinelSidebarProps {
   activeTab: "inbox" | "approved" | "runway"
   onTabChange: (tab: "inbox" | "approved" | "runway") => void
   inboxCount: number
   approvedCount: number
+  onSync: () => void
+  isSyncing: boolean
 }
 
-export function SentinelSidebar({ activeTab, onTabChange, inboxCount, approvedCount }: SentinelSidebarProps) {
+export function SentinelSidebar({ activeTab, onTabChange, inboxCount, approvedCount, onSync, isSyncing }: SentinelSidebarProps) {
   return (
     <aside className="w-64 border-r border-foreground/15 bg-card flex flex-col shrink-0">
       <div className="px-5 py-5 border-b border-foreground/15">
@@ -18,6 +20,16 @@ export function SentinelSidebar({ activeTab, onTabChange, inboxCount, approvedCo
           <h1 className="text-lg font-bold tracking-tight text-foreground">SENTINEL</h1>
         </div>
         <p className="text-xs text-muted-foreground mt-1 tracking-wide">Subscription Watchdog</p>
+      </div>
+      <div className="px-3 pt-3">
+        <button
+          onClick={onSync}
+          disabled={isSyncing}
+          className="flex items-center gap-2 w-full px-3 py-2 text-sm font-medium text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition-colors rounded-md disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+        >
+          <RefreshCw className={`h-4 w-4 ${isSyncing ? 'animate-spin' : ''}`} />
+          {isSyncing ? 'Syncing...' : 'Sync Bank Data'}
+        </button>
       </div>
       <nav className="flex flex-col gap-1 p-3 flex-1">
         <button

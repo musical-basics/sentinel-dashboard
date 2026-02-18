@@ -42,18 +42,10 @@ The content is organized as follows:
 
 <directory_structure>
 app/
-  api/
-    create-link-token/
-      route.ts
-    exchange-public-token/
-      route.ts
-    transactions/
-      route.ts
   globals.css
   layout.tsx
   page.tsx
 components/
-  plaid-link-button.tsx
   runway-view.tsx
   sentinel-dashboard.tsx
   sentinel-sidebar.tsx
@@ -65,7 +57,6 @@ hooks/
   use-toast.ts
 lib/
   mock-data.ts
-  plaid.ts
   types.ts
   utils.ts
 styles/
@@ -75,97 +66,12 @@ components.json
 next.config.mjs
 package.json
 postcss.config.mjs
+test-simplefin.js
 tsconfig.json
 </directory_structure>
 
 <files>
 This section contains the contents of the repository's files.
-
-<file path="app/api/create-link-token/route.ts">
-import { NextResponse } from 'next/server';
-import { plaidClient } from '@/lib/plaid';
-import { CountryCode, Products } from 'plaid';
-
-export async function POST() {
-    try {
-        const response = await plaidClient.linkTokenCreate({
-            user: { client_user_id: 'user-id-123' },
-            client_name: 'Sentinel',
-            products: [Products.Transactions],
-            country_codes: [CountryCode.Us],
-            language: 'en',
-        });
-        return NextResponse.json({ link_token: response.data.link_token });
-    } catch (error) {
-        console.error(error);
-        return NextResponse.json({ error: 'Failed to create link token' }, { status: 500 });
-    }
-}
-</file>
-
-<file path="app/api/exchange-public-token/route.ts">
-import { NextRequest, NextResponse } from 'next/server';
-import { plaidClient } from '@/lib/plaid';
-
-// TEMPORARY STORAGE (Resets when server restarts)
-// TODO: Replace this with Supabase/Database later
-let TEMPORARY_ACCESS_TOKEN: string | null = null;
-
-export async function POST(request: NextRequest) {
-    const { public_token } = await request.json();
-    try {
-        const response = await plaidClient.itemPublicTokenExchange({ public_token });
-        TEMPORARY_ACCESS_TOKEN = response.data.access_token;
-        return NextResponse.json({ success: true });
-    } catch (error) {
-        return NextResponse.json({ error: 'Failed to exchange token' }, { status: 500 });
-    }
-}
-
-// Helper to get token for the transactions route
-export function getAccessToken() {
-    return TEMPORARY_ACCESS_TOKEN;
-}
-</file>
-
-<file path="app/api/transactions/route.ts">
-import { NextResponse } from 'next/server';
-import { plaidClient } from '@/lib/plaid';
-import { getAccessToken } from '../exchange-public-token/route';
-
-export async function GET() {
-    const accessToken = getAccessToken();
-
-    if (!accessToken) {
-        return NextResponse.json({ error: 'No bank connected' }, { status: 401 });
-    }
-
-    try {
-        const response = await plaidClient.transactionsGet({
-            access_token: accessToken,
-            start_date: '2023-01-01',
-            end_date: new Date().toISOString().split('T')[0],
-        });
-
-        // Map Plaid data to your Sentinel Transaction type
-        const transactions = response.data.transactions.map((t) => ({
-            id: t.transaction_id,
-            merchant: t.merchant_name || t.name,
-            amount: Math.abs(t.amount), // Plaid sends positive values for spending
-            date: t.date,
-            category: t.category?.[0] || 'Uncategorized',
-            source: {
-                bank: 'Plaid Bank', // In production, fetching Institution Name is a separate call
-                lastFour: t.account_id.slice(-4),
-            }
-        }));
-
-        return NextResponse.json(transactions);
-    } catch (error) {
-        return NextResponse.json({ error: 'Failed to fetch transactions' }, { status: 500 });
-    }
-}
-</file>
 
 <file path="app/globals.css">
 @import 'tailwindcss';
@@ -347,52 +253,6 @@ import { SentinelDashboard } from "@/components/sentinel-dashboard"
 
 export default function Page() {
   return <SentinelDashboard />
-}
-</file>
-
-<file path="components/plaid-link-button.tsx">
-'use client';
-
-import { useState, useEffect, useCallback } from 'react';
-import { usePlaidLink } from 'react-plaid-link';
-import { Plus } from 'lucide-react';
-
-export function PlaidLinkButton({ onConnect }: { onConnect: () => void }) {
-    const [token, setToken] = useState<string | null>(null);
-
-    useEffect(() => {
-        const createToken = async () => {
-            const response = await fetch('/api/create-link-token', { method: 'POST' });
-            const data = await response.json();
-            setToken(data.link_token);
-        };
-        createToken();
-    }, []);
-
-    const onSuccess = useCallback(async (publicToken: string) => {
-        await fetch('/api/exchange-public-token', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ public_token: publicToken }),
-        });
-        onConnect(); // Tell dashboard to refresh data
-    }, [onConnect]);
-
-    const { open, ready } = usePlaidLink({
-        token,
-        onSuccess,
-    });
-
-    return (
-        <button
-            onClick={() => open()}
-            disabled={!ready}
-            className="flex items-center gap-2 w-full px-3 py-2 text-sm font-medium text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition-colors rounded-md"
-        >
-            <Plus className="h-4 w-4" />
-            Connect Bank
-        </button>
-    );
 }
 </file>
 
@@ -1189,22 +1049,6 @@ export const mockManualEstimates: ManualEstimate[] = [
 ]
 </file>
 
-<file path="lib/plaid.ts">
-import { Configuration, PlaidApi, PlaidEnvironments } from 'plaid';
-
-const configuration = new Configuration({
-  basePath: PlaidEnvironments[process.env.PLAID_ENV || 'sandbox'],
-  baseOptions: {
-    headers: {
-      'PLAID-CLIENT-ID': process.env.PLAID_CLIENT_ID,
-      'PLAID-SECRET': process.env.PLAID_SECRET,
-    },
-  },
-});
-
-export const plaidClient = new PlaidApi(configuration);
-</file>
-
 <file path="lib/types.ts">
 export type BankSource = {
   bank: string
@@ -1447,6 +1291,52 @@ const config = {
 export default config
 </file>
 
+<file path="test-simplefin.js">
+// SimpleFIN Test Script
+// Run: node test-simplefin.js
+
+const SIMPLEFIN_USERNAME = "E52C8BF5DE1176B0542D0DA787AB1F50B30B20F986E4DBC5D718606810CF0324";
+const SIMPLEFIN_PASSWORD = "95E6028B7806CE09C506E47C3E0F7042AEB9CC95C8D5F47ABC1853DFF3EF9769";
+const SIMPLEFIN_BASE_URL = "https://beta-bridge.simplefin.org/simplefin";
+
+async function getMoney() {
+    try {
+        console.log("🔌 Connecting to SimpleFin...");
+
+        const credentials = Buffer.from(`${SIMPLEFIN_USERNAME}:${SIMPLEFIN_PASSWORD}`).toString('base64');
+
+        const response = await fetch(`${SIMPLEFIN_BASE_URL}/accounts`, {
+            headers: {
+                'Authorization': `Basic ${credentials}`
+            }
+        });
+        const data = await response.json();
+
+        // Let's see what we caught
+        data.accounts.forEach(account => {
+            console.log(`\n🏦 Bank: ${account.org.domain} | Account: ${account.name}`);
+            console.log(`💰 Balance: $${account.balance}`);
+            console.log(`📜 Transactions found: ${account.transactions.length}`);
+
+            // Check for PayPal phantom transactions
+            const paypalTx = account.transactions.filter(t =>
+                t.description.toLowerCase().includes('paypal')
+            );
+
+            if (paypalTx.length > 0) {
+                console.log(`   --> Found ${paypalTx.length} PayPal transactions via Chase!`);
+                console.log(`   --> Example: ${paypalTx[0].description} ($${paypalTx[0].amount})`);
+            }
+        });
+
+    } catch (error) {
+        console.error("❌ Error:", error);
+    }
+}
+
+getMoney();
+</file>
+
 <file path="tsconfig.json">
 {
   "compilerOptions": {
@@ -1494,7 +1384,7 @@ export default config
 <file path="components/sentinel-dashboard.tsx">
 "use client"
 
-import { useState, useMemo, useCallback } from "react"
+import { useState, useMemo } from "react"
 import { Inbox, AlertTriangle, DollarSign, ShieldCheck } from "lucide-react"
 import { SentinelSidebar } from "./sentinel-sidebar"
 import { TransactionCard } from "./transaction-card"
@@ -1556,18 +1446,6 @@ export function SentinelDashboard() {
     setSubscriptions((prev) => prev.filter((s) => s.id !== id))
   }
 
-  const fetchRealData = useCallback(async () => {
-    try {
-      const res = await fetch('/api/transactions');
-      if (res.ok) {
-        const realData = await res.json();
-        setTransactions(realData);
-      }
-    } catch (e) {
-      console.error("Sync failed", e);
-    }
-  }, []);
-
   const monthlyTotal = useMemo(() => {
     return subscriptions
       .filter((s) => s.frequency === "monthly")
@@ -1592,7 +1470,6 @@ export function SentinelDashboard() {
         onTabChange={setActiveTab}
         inboxCount={transactions.length}
         approvedCount={subscriptions.length}
-        onConnect={fetchRealData}
       />
 
       <main className="flex-1 overflow-y-auto">
@@ -1789,17 +1666,15 @@ function ApprovedView({
 "use client"
 
 import { Inbox, ShieldCheck, Activity, DollarSign } from "lucide-react"
-import { PlaidLinkButton } from "./plaid-link-button"
 
 interface SentinelSidebarProps {
   activeTab: "inbox" | "approved" | "runway"
   onTabChange: (tab: "inbox" | "approved" | "runway") => void
   inboxCount: number
   approvedCount: number
-  onConnect: () => void
 }
 
-export function SentinelSidebar({ activeTab, onTabChange, inboxCount, approvedCount, onConnect }: SentinelSidebarProps) {
+export function SentinelSidebar({ activeTab, onTabChange, inboxCount, approvedCount }: SentinelSidebarProps) {
   return (
     <aside className="w-64 border-r border-foreground/15 bg-card flex flex-col shrink-0">
       <div className="px-5 py-5 border-b border-foreground/15">
@@ -1809,23 +1684,20 @@ export function SentinelSidebar({ activeTab, onTabChange, inboxCount, approvedCo
         </div>
         <p className="text-xs text-muted-foreground mt-1 tracking-wide">Subscription Watchdog</p>
       </div>
-      <div className="px-3 pt-3">
-        <PlaidLinkButton onConnect={onConnect} />
-      </div>
       <nav className="flex flex-col gap-1 p-3 flex-1">
         <button
           onClick={() => onTabChange("inbox")}
           className={`flex items-center gap-2.5 px-3 py-2.5 text-sm font-medium transition-colors text-left cursor-pointer ${activeTab === "inbox"
-              ? "bg-foreground text-background"
-              : "text-foreground hover:bg-foreground/5"
+            ? "bg-foreground text-background"
+            : "text-foreground hover:bg-foreground/5"
             }`}
         >
           <Inbox className="h-4 w-4" />
           Transaction Inbox
           {inboxCount > 0 && (
             <span className={`ml-auto text-xs font-mono px-1.5 py-0.5 ${activeTab === "inbox"
-                ? "bg-background text-foreground"
-                : "bg-foreground/10 text-foreground"
+              ? "bg-background text-foreground"
+              : "bg-foreground/10 text-foreground"
               }`}>
               {inboxCount}
             </span>
@@ -1834,16 +1706,16 @@ export function SentinelSidebar({ activeTab, onTabChange, inboxCount, approvedCo
         <button
           onClick={() => onTabChange("approved")}
           className={`flex items-center gap-2.5 px-3 py-2.5 text-sm font-medium transition-colors text-left cursor-pointer ${activeTab === "approved"
-              ? "bg-foreground text-background"
-              : "text-foreground hover:bg-foreground/5"
+            ? "bg-foreground text-background"
+            : "text-foreground hover:bg-foreground/5"
             }`}
         >
           <ShieldCheck className="h-4 w-4" />
           Approved Subscriptions
           {approvedCount > 0 && (
             <span className={`ml-auto text-xs font-mono px-1.5 py-0.5 ${activeTab === "approved"
-                ? "bg-background text-foreground"
-                : "bg-foreground/10 text-foreground"
+              ? "bg-background text-foreground"
+              : "bg-foreground/10 text-foreground"
               }`}>
               {approvedCount}
             </span>
@@ -1852,8 +1724,8 @@ export function SentinelSidebar({ activeTab, onTabChange, inboxCount, approvedCo
         <button
           onClick={() => onTabChange("runway")}
           className={`flex items-center gap-2.5 px-3 py-2.5 text-sm font-medium transition-colors text-left cursor-pointer ${activeTab === "runway"
-              ? "bg-foreground text-background"
-              : "text-foreground hover:bg-foreground/5"
+            ? "bg-foreground text-background"
+            : "text-foreground hover:bg-foreground/5"
             }`}
         >
           <DollarSign className="h-4 w-4" />
@@ -1921,12 +1793,10 @@ export function SentinelSidebar({ activeTab, onTabChange, inboxCount, approvedCo
     "lucide-react": "^0.564.0",
     "next": "16.1.6",
     "next-themes": "^0.4.6",
-    "plaid": "^41.1.0",
     "react": "19.2.4",
     "react-day-picker": "9.13.2",
     "react-dom": "19.2.4",
     "react-hook-form": "^7.54.1",
-    "react-plaid-link": "^4.1.1",
     "react-resizable-panels": "^2.1.7",
     "recharts": "2.15.0",
     "sonner": "^1.7.1",

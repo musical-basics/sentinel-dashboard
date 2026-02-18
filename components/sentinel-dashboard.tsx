@@ -1,18 +1,40 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect, useCallback } from "react"
 import { Inbox, AlertTriangle, DollarSign, ShieldCheck } from "lucide-react"
 import { SentinelSidebar } from "./sentinel-sidebar"
 import { TransactionCard } from "./transaction-card"
 import { SubscriptionRow } from "./subscription-row"
 import { RunwayView } from "./runway-view"
-import { mockTransactions, mockSubscriptions, mockIncomeSources, mockManualEstimates } from "@/lib/mock-data"
+import { mockSubscriptions, mockIncomeSources, mockManualEstimates } from "@/lib/mock-data"
 import type { Transaction, Subscription } from "@/lib/types"
 
 export function SentinelDashboard() {
   const [activeTab, setActiveTab] = useState<"inbox" | "approved" | "runway">("inbox")
-  const [transactions, setTransactions] = useState<Transaction[]>(mockTransactions)
+  const [transactions, setTransactions] = useState<Transaction[]>([])
   const [subscriptions, setSubscriptions] = useState<Subscription[]>(mockSubscriptions)
+  const [isSyncing, setIsSyncing] = useState(false)
+  const [hasLoaded, setHasLoaded] = useState(false)
+
+  const syncBankData = useCallback(async () => {
+    setIsSyncing(true)
+    try {
+      const res = await fetch('/api/simplefin')
+      if (res.ok) {
+        const data = await res.json()
+        setTransactions(data.transactions)
+      }
+    } catch (e) {
+      console.error('SimpleFIN sync failed:', e)
+    } finally {
+      setIsSyncing(false)
+      setHasLoaded(true)
+    }
+  }, [])
+
+  useEffect(() => {
+    syncBankData()
+  }, [syncBankData])
 
   const handleApprove = (id: string) => {
     const txn = transactions.find((t) => t.id === id)
@@ -86,6 +108,8 @@ export function SentinelDashboard() {
         onTabChange={setActiveTab}
         inboxCount={transactions.length}
         approvedCount={subscriptions.length}
+        onSync={syncBankData}
+        isSyncing={isSyncing}
       />
 
       <main className="flex-1 overflow-y-auto">
